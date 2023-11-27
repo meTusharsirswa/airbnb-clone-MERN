@@ -137,9 +137,8 @@ const SelectedHotel = () => {
 
   return (
     <div className="productscreen">
-     {/* <Link to="/"><ArrowBackSharpIcon/></Link> */}
      <div className="logo">
-        <Link to="/">
+        <Link to="/dashboard">
           <img src="../../public/airbnb.png" alt="" />
         </Link>
       </div>
@@ -147,7 +146,7 @@ const SelectedHotel = () => {
       
         <div className="productscreen__left">
           <div className="left__image">
-            <p className="left__name">{product.name}</p>
+            <p className="left__name">{product.name} , {product.location}</p>
 
             <div id={`carouselExampleAutoplaying`} className="carousel slide">
               <div className="carousel-inner">

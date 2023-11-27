@@ -12,10 +12,6 @@ const HotelSchema = new mongoose.Schema(
     adult: { type: Number },
     child: { type: Number },
     infents: { type: Number },
-    hotel_category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Hotel-Category",
-    },
   },
   { timestamps: true }
 );

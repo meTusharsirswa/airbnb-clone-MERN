@@ -17,7 +17,6 @@ import { useState } from "react";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -32,7 +31,7 @@ import { formatIndianCurrency } from "../../utils";
 const drawerWidth = 240;
 const columns = [
   { id: "name", label: "Name", minWidth: 170 },
-  { id: "category", label: "Category", minWidth: 100 },
+  { id: "location", label: "Location", minWidth: 100 },
   { id: "rent", label: "Rent", minWidth: 100 },
   { id: "description", label: "Description", minWidth: 100 },
   {
@@ -48,7 +47,6 @@ const Hotels = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [hotels, setHotels] = useState([]);
   const [open, setOpen] = React.useState(false);
-  const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingHotel, setEditingHotel] = useState(null);
   const [deletingHotel, setDeletingHotel] = useState(null);
@@ -57,6 +55,10 @@ const Hotels = () => {
     rent: "",
     description: "",
     images: "",
+    location : "",
+    adult : "",
+    child : "",
+    infents : ""
   });
 
   const handleChangePage = (event, newPage) => {
@@ -74,8 +76,12 @@ const Hotels = () => {
       rent: formData.rent,
       description: formData.description,
       images: formData.images,
+      location : formData.location,
+      adult : formData.adult,
+      child : formData.child,
+      infents : formData.infents
     };
-  
+
     axios
       .post("http://localhost:4000/add-hotel", data)
       .then((res) => {
@@ -86,44 +92,41 @@ const Hotels = () => {
         console.error("Error creating a new hotel:", error);
       });
   };
-  
-  
-  const fetchHotels = () => {
-    axios.get("http://localhost:4000/get-hotels").then((res) => {
-      if (res.status) {
-        setHotels(res.data.data);
-      }
-    });
-  };
 
-  const GetCategory = () => {
-    axios.get("http://localhost:4000/get-hotel-category").then((res) => {
-      setCategory(res.data.data);
-      setLoading(false);
-    });
+
+  const fetchHotels = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/get-hotels");
+      if (response.status === 200) {
+        setHotels(response.data.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Error fetching hotels:", error);
+      setLoading(false); // Set loading to false even in case of an error
+    }
   };
 
   useEffect(() => {
     fetchHotels();
-    GetCategory();
   }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
   const handleEdit = (hotel) => {
     setEditingHotel(hotel);
     setFormData({
       name: hotel.name,
-      // hotel_category: hotel.hotel_category.subtitle, // Assuming category is the correct field name
       rent: hotel.rent,
       description: hotel.description,
       images: hotel.images,
+      location : hotel.location,
+      adult : hotel.adult,
+      child : hotel.child,
+      infents : hotel.infents,
+
     });
     setOpen(true);
   };
@@ -139,46 +142,48 @@ const Hotels = () => {
       rent: formData.rent,
       description: formData.description,
       images: formData.images,
+      location : formData.location,
+      adult : formData.adult,
+      child : formData.child,
+      infents : formData.infents
     };
-  
+
     axios
-      .post(`http://localhost:4000/update-hotel`, updatedHotel)
-      .then((res) => {
-        setOpen(false);
-        fetchHotels();
-      })
-      .catch((error) => {
-        console.error("Error updating the hotel:", error);
-      });
+    .post(`http://localhost:4000/update-hotel/${editingHotel._id}`, updatedHotel)
+    .then((res) => {
+      setOpen(false);
+      fetchHotels();
+    })
+    .catch((error) => {
+      console.error("Error updating the hotel:", error);
+    });
   };
-  
+
   const handleClose = () => {
     setDeletingHotel(null);
     setOpen(false);
   };
-  
+
   const handleDeleteSubmit = () => {
     axios
       .delete(`http://localhost:4000/delete-hotel/${deletingHotel._id}`)
       .then((res) => {
         if (res.status === 200) {
-          setDeletingHotel(null); // Clear the deletingHotel state when successful
-          fetchHotels(); // Refresh the hotel list
+          setDeletingHotel(null);
+          fetchHotels();
         }
       })
       .catch((error) => {
         console.error("Error deleting the hotel:", error);
       });
   };
+
   const handleInputChange = (event) => {
     const { id, value } = event.target;
-    console.log("id" , id)
-    console.log("value" , value)
     setFormData({
       ...formData,
       [id]: value,
     });
-    console.log(event.target)
   };
 
   if (loading) {
@@ -209,96 +214,94 @@ const Hotels = () => {
         <Navigation />
 
         <Box
-          component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-        >
-          <div className="add-hotel-btn">
-            <Button variant="outlined" onClick={handleClickOpen}>
-              Add Hotel
-            </Button>
-          </div>
-          <Paper sx={{ width: "100%", overflow: "hidden" }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align="left"
-                        style={{ minWidth: column.minWidth }}
+        component="main"
+        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+      >
+        <div className="add-hotel-btn">
+          <Button variant="outlined" onClick={handleClickOpen}>
+            Add Hotel
+          </Button>
+        </div>
+        <Paper sx={{ width: "100%", overflow: "hidden" }}>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align="left"
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {hotels
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row._id}
                       >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {hotels
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row._id}
-                        >
-                          {columns.map((column) => {
-                            if (column.id === "category") {
-                              return (
-                                <TableCell key={column.id} align="left">
-                                  {row.hotel_category &&
-                                    row.hotel_category.subtitle}
-                                </TableCell>
-                              );
-                            } else if (column.id === "actions") {
-                              return (
-                                <TableCell key={column.id} align="center">
-                                  <EditNoteSharpIcon
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => handleEdit(row)}
-                                  />
-                                  <DeleteIcon
-                                    style={{ cursor: "pointer" }}
-                                    onClick={() => handleDelete(row)}
-                                  />
-                                </TableCell>
-                              );
-                            } else if (column.id === "rent") {
-                              return (
-                                <TableCell key={column.id} align="left">
-                                  {formatIndianCurrency(row[column.id])}
-                                </TableCell>
-                              );
-                            } else {
-                              const value = row[column.id];
-                              return (
-                                <TableCell key={column.id} align="left">
-                                  {column.format && typeof value === "number"
-                                    ? column.format(value)
-                                    : value}
-                                </TableCell>
-                              );
-                            }
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
-              component="div"
-              count={hotels.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Paper>
-        </Box>
+                        {columns.map((column) => {
+                          if (column.id === "actions") {
+                            return (
+                              <TableCell key={column.id} align="center">
+                                <EditNoteSharpIcon
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => handleEdit(row)}
+                                />
+                                <DeleteIcon
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => handleDelete(row)}
+                                />
+                              </TableCell>
+                            );
+                          } else if (column.id === "rent") {
+                            return (
+                              <TableCell key={column.id} align="left">
+                                {formatIndianCurrency(row[column.id])}
+                              </TableCell>
+                            );
+                          } else {
+                            const value = row[column.id];
+                            return (
+                              <TableCell key={column.id} align="left">
+                                {column.id === "location" ? (
+                                  // Render a link or a plain text based on your preference
+                                  <p>
+                                    {value}
+                                  </p>
+                                ) : (
+                                  value
+                                )}
+                              </TableCell>
+                            );
+                          }
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={hotels.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </Box>
       </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{editingHotel ? "Edit Hotel" : "Add Hotel"}</DialogTitle>
@@ -314,7 +317,17 @@ const Hotels = () => {
             value={formData.name}
             onChange={handleInputChange}
           />
-     
+          <TextField
+            autoFocus
+            margin="dense"
+            id="location"
+            label="Location"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={formData.location}
+            onChange={handleInputChange}
+          />
           <TextField
             autoFocus
             margin="dense"
@@ -371,4 +384,5 @@ const Hotels = () => {
     </>
   );
 };
+
 export default Hotels;

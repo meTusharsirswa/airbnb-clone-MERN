@@ -16,9 +16,9 @@ function App() {
     <>
      <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login/>} />
+          <Route path="/" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
-          <Route path="/" element={<Dashboard/>} />
+          <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/hotel/:productId" element={<SelectedHotel/>} />
           <Route path="/search-results" element={<SearchResult/>} />
       {/* Admin route */}

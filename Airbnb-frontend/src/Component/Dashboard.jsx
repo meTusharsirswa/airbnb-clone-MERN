@@ -58,10 +58,10 @@ const Dashboard = () => {
 </div>
 
                 <div className="product__info">
-                  <h6 className="info__name">{item.name}</h6>
-                  <h6 style={{ color: "gray" }} className="info__description">
+                  <h6 className="info__name">{item.name} , <strong>{item.location}</strong></h6>
+                  {/* <h6 style={{ color: "gray" }} className="info__description">
                     {item.distance_from_you} Kilometers away
-                  </h6>
+                  </h6> */}
                   <h6 className="info__price">
                     <strong>{formatIndianCurrency(item.rent)}</strong> night
                   </h6>

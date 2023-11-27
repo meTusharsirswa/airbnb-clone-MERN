@@ -48,7 +48,7 @@ const SearchResult = () => {
               </div>
 
               <div className="product__info">
-                <h6 className="info__name">{item.name}</h6>
+                <h6 className="info__name">{item.name} , {item.location}</h6>
                 <h6 style={{ color: "gray" }} className="info__description">
                   {item.distance_from_you} Kilometers away
                 </h6>

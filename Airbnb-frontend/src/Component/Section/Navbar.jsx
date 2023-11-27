@@ -38,7 +38,7 @@ const Navbar = () => {
   return (
     <>
       <div className="logo">
-        <Link to="/">
+        <Link to="/dashboard">
           <img src="../../../public/airbnb.png" alt="" />
         </Link>
       </div>
