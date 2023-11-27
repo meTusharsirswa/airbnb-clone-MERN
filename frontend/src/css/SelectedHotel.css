@@ -1,0 +1,208 @@
+.productscreen {
+  max-width: 1300px;
+  margin: 1rem auto;
+  display: flex;
+}
+
+
+
+.left__info {
+  margin: 1rem;
+  background: #fff;
+  height: fit-content;
+  font-size: 0.9rem;
+}
+
+.left__name {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.left__info > p,
+.right__info > p {
+  font-size: 18px;
+}
+
+.left__info > p:last-child,
+.right__info > p:last-child {
+  border: none;
+}
+
+.reserve_box {
+  display: grid;
+  grid-template-columns: auto auto;
+  border: 1px solid black;
+  border-radius: 6px;
+  margin-top: 2rem;
+
+}
+
+.reserve_box_inputs {
+  outline: none;
+  border: none;
+  background-color: white;
+  color: gray;
+}
+
+.right__info {
+  width: 450px;
+  height: 550px;
+  margin: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.right__info p {
+  font-size: 16px;
+  display: grid;
+  /* grid-template-columns: repeat(2, 1fr); */
+}
+
+.right__info p > {
+  grid-column: 1/-1;
+  width: 100%;
+  padding: 10px 16px;
+  background: #171717;
+  color: #f4f4f4;
+  border: 1px solid #171717;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.check_in {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  border: 1px solid gray;
+  padding: 10px;
+}
+
+.typrography {
+  font-size: 17px !important;
+  font-weight: 400 !important;
+}
+
+.guest_accordion {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: start !important;
+  align-items: start !important;
+  /* border: 1px solid gray !important; */
+  width: 172% !important;
+  /* border-radius: 0px !important; */
+}
+
+.add_to_cart_btn,
+.buy_now_btn {
+  display: flex;
+  justify-content: center;
+  grid-column: 1/-1;
+  width: 100%;
+  padding: 10px 16px;
+  background: #171717;
+  color: #f4f4f4;
+  border: 1px solid #171717;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.right__info select {
+  padding: 10px 16px;
+}
+
+.success-alert {
+  position: absolute !important;
+  right: 1% !important;
+  top: 1% !important;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.show-success-alert {
+  opacity: 1;
+}
+
+.buy_now_btn {
+  background-color: orange !important;
+  border: none;
+  margin-top: 10px;
+}
+
+
+
+.adults {
+  display: grid;
+  grid-template-columns: 97px 97px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Add these styles to your SelectedHotel.css file */
+
+.productscreen__left {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 5rem;
+}
+
+.left__image {
+  margin: 1rem;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  min-width: 100%;
+  flex: 0 0 auto;
+}
+
+.hotel_image {
+  /* width: 100%; */
+  min-height: 100%;
+  object-fit: cover; /* Maintain aspect ratio while covering the carousel item */
+  border-radius: 13px;
+}
+
+.continue_btn{
+  display: flex;
+  margin: 20px auto;
+  width: 200px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background: #e41d58;
+  font-weight: bold;
+
+}
+.bottom_right_info{
+  display: grid;
+  grid-template-columns: 300px 100px;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  text-align: start;
+}
+.horizontal_line{
+  border-bottom: 0.5px solid gray;
+  display: flex;
+  width: 380px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}

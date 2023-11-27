@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 20px;
+  width: 100%;
+  max-width: 1400px; /* Adjust the maximum width as needed */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px; /* Add padding for spacing */
+  background-color: white; /* Set a background color for visualization */
+}
+
+.hotel_dashboard_image {
+  width: 100%;
+  object-fit: cover;
+  height: 250px;
+  border-radius: 15px;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.product__info > h6 {
+  color: black;
+}
+
+/* position: relative;
+  width: 100%;
+  overflow: hidden;
+  object-fit: contain;
+  height: 100vh;
+} */
